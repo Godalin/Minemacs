@@ -1,6 +1,33 @@
 ;;;; language config -*- lexical-binding: t; -*-
 
 
+;;; tree-sitter
+(use-package tree-sitter
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook 'tree-sitter-hl-mode))
+
+(use-package tree-sitter-langs)
+
+
+;;; eglot for lsp
+(use-package eglot
+  :hook (haskell-mode . eglot))
+
+
+;;; complete anything
+(use-package company
+  :config
+  (setq company-idle-delay 0
+	company-minimum-prefix-length 1)
+  (global-company-mode t))
+
+(use-package company-quickhelp
+  :config
+  (setq company-quickhelp-delay nil)
+  (company-quickhelp-mode))
+
+
 ;;; common-lisp-sly
 (use-package sly
   :after (evil)

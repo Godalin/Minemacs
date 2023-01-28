@@ -9,7 +9,8 @@
   (setq evil-undo-system 'undo-redo
 	evil-want-Y-yank-to-eol t
 	evil-move-beyond-eol t)
-  (evil-initial-state 'dired-mode 'emacs))
+  (evil-set-initial-state 'dired-mode 'emacs)
+  (evil-set-initial-state 'vterm-mode 'emacs))
 
 
 ;;; evil-collection
