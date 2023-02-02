@@ -2,8 +2,9 @@
 
 
 ;;; welcome message
-(defun display-startup-echo-area-message()
-  (message "Hello you to Minemacs by Godalin"))
+;; (defun display-startup-echo-area-message ()
+;;   (message "Hello you to Minemacs by Godalin"))
+
 
 ;;; off the welcome page
 (setq inhibit-splash-screen t)
@@ -55,6 +56,26 @@
 		    :family "Maple Mono SC NF" :height 140)
 
 
+;;; show pressed keys using keypression
+(use-package keypression
+  :config
+  (setq keypression-use-child-frame t
+	keypression-fade-out-delay 0.5
+	keypression-fade-out-seconds 0.2
+
+	keypression-frame-justify 'keypression-left-justified
+
+	keypression-frames-maxnum 1
+	keypression-cast-command-name t
+	keypression-cast-command-name-format "%s\n%s"
+	keypression-combine-same-keystrokes t
+	keypression-font-face-attribute '(:width normal :height 150 :weight bold)
+	keypression-x-offset 6
+	keypression-y-offset 42)
+  (keypression-mode))
+
+
+
 ;;; theme
 ;; (use-package monokai-theme
 ;;   :config
@@ -64,18 +85,6 @@
   :config
   (load-theme 'atom-one-dark 1))
 
-(load-theme 'tsdh-dark 1)
-
-
-;;; show pressed keys
-(use-package keycast
-  :after doom-modeline
-  :config
-  (setq keycast-mode-line-insert-after '(:eval (doom-modeline-format--main)))
-  (add-to-list 'global-mode-string '("" keycast-mode-line " "))
-  :hook
-  ;; (doom-modeline-mode . keycast-mode-line-mode)
-  )
 
 
 ;;; modebar
