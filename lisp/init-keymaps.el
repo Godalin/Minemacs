@@ -51,14 +51,11 @@
 ;; keeps RET's behavior
 (general-define-key
  :keymaps 'company-active-map
-
  "TAB" 'company-complete
  [tab] 'company-complete
  "RET" nil
  [return] nil
-
  "M-h" 'company-quickhelp-manual-begin
-
  )
 
 
@@ -78,14 +75,15 @@
 
 ;;; global which-key
 (which-key-add-key-based-replacements
-  "SPC b" "ops - buffers"
-  "SPC d" "ops - dired"
-  "SPC f" "ops - files"
-  "SPC p" "ops - projects"
-  "SPC m" "ops - local"
-  "SPC h" "helps"
-  "SPC C-f" "ops - search"
-  "SPC s" "ops - lsp")
+  "SPC b" "buffer"
+  "SPC d" "dired"
+  "SPC f" "file"
+  "SPC p" "project"
+  "SPC m" "local"
+  "SPC h" "help"
+  "SPC C-f" "search"
+  "SPC s" "lsp"
+  "SPC t" "toggle")
 
 
 ;;; for global
@@ -94,11 +92,15 @@
   :keymaps 'override
 
   ;; command line
-  ;; "SPC" 'helm-M-x
   "SPC" 'execute-extended-command
+  ":" 'eval-expression
+
+
 
   ;; vterm
   "'" 'vterm-other-window
+
+
 
   ;; quick move
   "<up>" 'evil-window-up
@@ -106,8 +108,7 @@
   "<left>" 'evil-window-left
   "<right>" 'evil-window-right
 
-  ;; number window
-  ;; "#" 'winum-select-window-by-number
+
 
   ;; buffer operation
   "bb" 'switch-to-buffer
@@ -118,25 +119,14 @@
   "bp" 'previous-buffer
   "b<right>" 'next-buffer
   "bn" 'next-buffer
-  "bd" 'kill-buffer
+  "bd" 'kill-current-buffer
   "bs" 'scratch-buffer
   "br" 'rename-buffer
   "bu" 'rename-uniquely
   "bq" 'read-only-mode
   "bl" 'list-buffers
 
-  ;; eval elisp expressions
-  "ei" 'eval-expression
 
-  ;; help functions
-  "hw" 'hello
-  "hk" 'describe-key
-  "hf" 'describe-function
-  "hs" 'info-lookup-symbol
-  "hv" 'describe-variable
-
-  ;; dired operations
-  "dd" 'dired
 
   ;; file operations
   "fr" 'recentf-open
@@ -147,14 +137,46 @@
   "fw" 'write-file
   "fW" 'set-visited-file-name
   "f~" 'not-modified
-  ;; "ft" 'treemacs
-  ;; "fe" 'treemacs-select-directory
-  "ft" 'neotree-toggle
+  ;; treemacs
+  "ft" 'treemacs
+  "fe" 'treemacs-select-directory
+  ;; "ft" 'neotree-toggle
+
+
+
+  ;; eval elisp expressions
+  "ei" 'eval-expression
+
+
+
+  ;; help functions
+  "hw" 'hello
+  "hk" 'describe-key
+  "hf" 'describe-function
+  "hs" 'info-lookup-symbol
+  "hv" 'describe-variable
+
+
+
+  ;; dired operations
+  "dd" 'dired
+
+
 
   ;; find things
   "C-f s" 'swiper-isearch
   "C-f f" 'swiper
   "C-f p" 'swiper-thing-at-point
+  "C-f d" 'xref-find-definitions
+  "C-f i" 'imenu
+
+
+
+  ;; new something
+  "nb" 'tab-bar-new-tab
+  "nl" 'tab-line-new-tab
+
+
 
   ;; project operations
   "p SPC" 'project-execute-extended-command
@@ -165,28 +187,54 @@
   "pf" 'project-find-file
   "pg" 'project-find-regexp
 
+
+
+  ;; quit options
+  "qq" 'kill-emacs
+  "qr" 'restart-emacs
+  "qQ" 'server-stop
+  "qR" 'server-start
+  "qb" 'tab-bar-close-tab
+  "ql" 'tab-line-close-tab
+
+
+
   ;; resume
   "rr" 'ivy-resume
 
+
+
   ;; lsp operations
-  "ss" 'eglot
-  "sS" 'eglot-reconnect
-  "sd" 'eglot-shutdown
-  "sD" 'eglot-shutdown-all
-  "sF" 'eglot-format
-  "sf" 'eglot-format-buffer
+  "Ss" 'eglot
+  "SS" 'eglot-reconnect
+  "Sd" 'eglot-shutdown
+  "SD" 'eglot-shutdown-all
+
+  "sN" 'flymake-goto-prev-error
+  "sn" 'flymake-goto-next-error
+  "sf" 'format-all-buffer
+  "sc" 'eglot-code-actions
   "sr" 'eglot-rename
   "sto" 'eglot-events-buffer
   "ste" 'eglot-stderr-buffer
 
-  ;; themes
-  "tt" 'load-theme
+
+
+  ;; toggles
+  "tk" 'keycast-tab-bar-mode
+  "tT" 'load-theme
+  "tl" 'global-tab-line-mode
+  "tb" 'tab-bar-mode
+
+
 
   ;; window split
+  "w" 'ace-window
   ;; "w|" 'split-window-horizontally
   ;; "w-" 'split-window-vertically
   ;; "wo" 'delete-other-windows
-  "w" 'ace-window
+
+
 
   "ko" 'delete-other-windows)
 
@@ -332,9 +380,16 @@
 
 
 
-;;; for ivy
-(general-map-key
- :keymaps 'ivy-mode)
+;;; for haskell
+(general-define-key
+ :states 'motion
+ :keymaps 'haskell-mode-map
+ "o" 'haskell-evil-open-below
+ "O" 'haskell-evil-open-above
+ [remap evil-open-below] 'haskell-evil-open-below
+ [remap evil-open-above] 'haskell-evil-open-above
+ )
+
 
 
 

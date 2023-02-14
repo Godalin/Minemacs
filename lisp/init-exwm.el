@@ -1,8 +1,8 @@
 (use-package exwm)
 (use-package exwm-config)
 
-(exwm-config-default)
-;; (exwm-config-example)
+;; (exwm-config-default)
+(exwm-config-example)
 
 
 

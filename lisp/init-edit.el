@@ -15,4 +15,18 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 
+;;; pair edits
+(setq electric-pair-preserve-balance t
+      electric-pair-delete-adjacent-pairs t
+      electric-pair-open-newline-between-pairs t
+      electric-pair-skip-whitespace t
+      electric-pair-pairs '((?\( . ?\))
+			    (?\[ . ?\])
+			    (?\{ . ?\})
+			    (?\" . ?\")))
+(electric-pair-mode t)
+
+
+
+
 (provide 'init-edit)

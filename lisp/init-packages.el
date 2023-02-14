@@ -12,7 +12,7 @@
                          ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
                          ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
 
-(package-initialize)
+;; (package-initialize)
 
 
 
@@ -33,13 +33,17 @@
       use-package-check-before-init t)
 
 
+(use-package exec-path-from-shell
+  :config
+  (exec-path-from-shell-initialize))
+
 
 ;;; auto update packages
-(use-package auto-package-update
-  :config
-  (setq auto-package-update-delete-old-verson t
-	auto-package-update-hide-result t)
-  (auto-package-update-maybe))
+;; (use-package auto-package-update
+;;   :config
+;;   (setq auto-package-update-delete-old-verson t
+;; 	auto-package-update-hide-result t)
+;;   (auto-package-update-maybe))
 
 
 

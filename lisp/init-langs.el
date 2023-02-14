@@ -1,6 +1,7 @@
 ;;;; language config -*- lexical-binding: t; -*-
 
 
+
 ;;; tree-sitter
 (use-package tree-sitter
   :config
@@ -10,18 +11,20 @@
 
 ;;; eglot for lsp
 (use-package eglot
-  :defer t
-  :hook (
-	 ;; haskell mode not activate automatically
-	 ;; (haskell-mode . eglot)
-	 (python-mode .eglot))
   :config
-
+  ;; (setcdr (assq 'haskell-mode eglot-server-programs)
+  ;; 	  ("haskell-language-server-wrapper" "--lsp"
+  ;; 	   :initializationOptions
+  ;; 	   '("haskell"
+  ;; 	     ("formattingProvider" "none"))))
+  (add-hook 'python-mode-hook 'eglot-ensure)
+  (add-hook 'haskell-mode-hook 'eglot-ensure)
   )
 
 
-;; (use-package lsp-mode)
-;; (use-package lsp-ui)
+(use-package format-all
+  :config
+  (add-hook 'prog-mode-hook 'format-all-mode))
 
 
 ;;; complete anything
@@ -54,6 +57,7 @@
   ;; 	      (unless (sly-connected-p)
   ;; 		(save-excursion (sly)))))
   (add-hook 'sly-db-hook 'evil-emacs-state)
+  :hook ((sly . follow-mode))
   )
 
 
@@ -72,27 +76,30 @@
 
 ;;; haskell
 (use-package haskell-mode
+  :after evil
   :config
-  (defun haskell-setup ()
-    "Setup variables for editing Haskell files."
-    ;; (setq whitespace-line-column 70)
-    ;; (make-local-variable 'tab-stop-list)
-    ;; (setq tab-stop-list (number-sequence 2 80 2))
-    (haskell-indentation-mode 0)
-    ;; (setq indent-line-function 'indent-relative)
-    )
-  :hook
-  ;; ((haskell-mode . 'haskell-setup))
-  )
+  (add-hook 'haskell-mode-hook 'haskell-doc-mode)
 
+  (defun haskell-evil-open-above ()
+    (interactive)
+    ;; (evil-digit-argument-or-evil-beginning-of-line)
+    (haskell-indentation-newline-and-indent)
+    (evil-previous-line)
+    (haskell-indentation-indent-line)
+    (evil-append-line nil))
 
-;; (use-package lsp-haskell
-;;   :config
-;;   (setq lsp-haskell-server-path "/home/godalin/.ghcup/bin/haskell-language-server-wrapper"))
+  (defun haskell-evil-open-below ()
+    (interactive)
+    (evil-append-line nil)
+    (haskell-indentation-newline-and-indent)))
 
 
 ;;; some other f**king langs
+(use-package markdown-mode)
 
+(use-package prolog
+  :config
+  (setq prolog-electric-if-then-else-flag t))
 
 
 (provide 'init-langs)
