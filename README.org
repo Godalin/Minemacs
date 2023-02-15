@@ -1,5 +1,5 @@
 * Minemacs is My Emacs
 
-This is my emacs config. Because I broke it from time to time, I made this repository on github and store these code here. I used to use spacemacs and doom, but sometimes I found things that I didn't like, not knowing how to change them. Then I decided to work with my own emacs: Minemacs. This is a stupid name now because this config is just for my personal usage at present. Of course you can use it but you may have to do some modification for yourself. After its getting better and better, I may think about change its name.
+This is my emacs config. Because I broke it from time to time, I made this repository on github and store these code here. I used to use spacemacs and doom, but sometimes I found things that I didn't like, not knowing how to change them. Then I decided to work with my own emacs: Minemacs. This is a stupid name now because this config is just for my personal usage at present. Of course you can use it but you may have to do some modification for yourself. After its getting better and better, I may think about changing its name.
 
 You can read the ./lisp/init-keymaps.el file to get to know the keymaps defined in Minemacs; you can also add whatever you want.
