@@ -12,13 +12,13 @@
                          ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
                          ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
 
-;; (package-initialize)
+(package-initialize)
 
 
 
 ;;; refresh source
-;; (when (not package-archive-contents)
-;;   (package-refresh-contents))
+(when (not package-archive-contents)
+  (package-refresh-contents))
 
 
 
@@ -27,10 +27,13 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+
+
 ;;; use-package settings
 (require 'use-package)
 (setq use-package-always-ensure t
-      use-package-check-before-init t)
+      use-package-check-before-init t
+      )
 
 
 (use-package exec-path-from-shell
