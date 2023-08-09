@@ -26,6 +26,7 @@
   (counsel-mode))
 
 
+
 ;;; file tree sidebar
 (use-package treemacs)
 (use-package treemacs-evil

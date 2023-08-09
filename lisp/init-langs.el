@@ -12,11 +12,11 @@
 ;;; eglot for lsp
 (use-package eglot
   :config
-  ;; (setcdr (assq 'haskell-mode eglot-server-programs)
-  ;; 	  ("haskell-language-server-wrapper" "--lsp"
-  ;; 	   :initializationOptions
-  ;; 	   '("haskell"
-  ;; 	     ("formattingProvider" "none"))))
+  (setcdr (assq 'haskell-mode eglot-server-programs)
+	  '("haskell-language-server-wrapper" "--lsp"
+	    :initializationOptions
+	    (:haskell
+	     (:formattingProvider "none"))))
   (add-hook 'python-mode-hook 'eglot-ensure)
   (add-hook 'haskell-mode-hook 'eglot-ensure)
   )
@@ -24,7 +24,9 @@
 
 (use-package format-all
   :config
-  (add-hook 'prog-mode-hook 'format-all-mode))
+  (format-all-mode)
+  (add-hook 'prog-mode-hook 'format-all-mode)
+  (add-hook 'format-all-mode-hook 'format-all-ensure-formatter))
 
 
 ;;; complete anything
@@ -79,6 +81,7 @@
   :after evil
   :config
   (add-hook 'haskell-mode-hook 'haskell-doc-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
   (defun haskell-evil-open-above ()
     (interactive)
@@ -94,12 +97,18 @@
     (haskell-indentation-newline-and-indent)))
 
 
+
 ;;; some other f**king langs
 (use-package markdown-mode)
+
+
 
 (use-package prolog
   :config
   (setq prolog-electric-if-then-else-flag t))
+
+
+
 
 
 (provide 'init-langs)

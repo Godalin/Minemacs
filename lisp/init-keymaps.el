@@ -13,21 +13,19 @@
   )
 
 
-;;; window move by number
-;; (use-package winum
-;;   :ensure t
-;;   :config
-;;   (winum-mode))
 
 (use-package ace-window
   :config
-  (setq aw-minibuffer-flag t))
+  (setq aw-minibuffer-flag t
+	aw-dispatch-always t
+	))
 
 
 ;;; define leader keys
 (defconst my-leader "SPC")
 (defconst my-local-leader "SPC m")
 (defconst my-move-leader "C-w")
+
 
 
 (general-create-definer my-leader-def
@@ -37,13 +35,6 @@
 (general-create-definer my-move-leader-def
   :prefix my-move-leader)
 
-
-;;; helm-mode bindings
-;; (general-define-key
-;;  :keymaps 'helm-map
-;;  "ESC" 'helm-keyboard-quit
-;;  "TAB" 'helm-execute-persistent-action
-;;  "C-z" 'helm-select-action)
 
 
 ;;; company bindings
@@ -59,11 +50,6 @@
  )
 
 
-;;; simple config
-;; (general-define-key
-;;  ;; "M-x" 'helm-M-x
-;;  )
-
 
 ;;; insert mode key modify
 (general-define-key
@@ -75,18 +61,27 @@
 
 ;;; global which-key
 (which-key-add-key-based-replacements
+  "SPC SPC" "execute"
+  "SPC '" "terminal"
+  "SPC :" "eval"
+  "SPC a" "apps"
   "SPC b" "buffer"
+  "SPC c" "code"
   "SPC d" "dired"
   "SPC f" "file"
-  "SPC p" "project"
-  "SPC m" "local"
   "SPC h" "help"
-  "SPC C-f" "search"
-  "SPC s" "lsp"
+  "SPC k" "kill"
+  "SPC m" "local"
+  "SPC p" "project"
+  "SPC q" "quit"
+  "SPC s" "lsp-code"
+  "SPC S" "lsp"
   "SPC t" "toggle")
 
 
-;;; for global
+
+
+;;; SPC: for global
 (my-leader-def
   :states '(motion)
   :keymaps 'override
@@ -99,6 +94,11 @@
 
   ;; vterm
   "'" 'vterm-other-window
+
+  "," 'tab-line-switch-to-prev-tab
+  "." 'tab-line-switch-to-next-tab
+  "<" 'tab-bar-switch-to-prev-tab
+  ">" 'tab-bar-switch-to-next-tab
 
 
 
@@ -115,16 +115,19 @@
   "bf" 'switch-to-buffer-other-frame
   "bt" 'switch-to-buffer-other-tab
   "bw" 'switch-to-buffer-other-window
-  "b<left>" 'previous-buffer
   "bp" 'previous-buffer
-  "b<right>" 'next-buffer
   "bn" 'next-buffer
   "bd" 'kill-current-buffer
   "bs" 'scratch-buffer
   "br" 'rename-buffer
-  "bu" 'rename-uniquely
   "bq" 'read-only-mode
   "bl" 'list-buffers
+
+
+
+  ;; SPC c: code operations
+  "cc" 'hs-hide-block
+  "cC" 'hs-show-block
 
 
 
@@ -144,15 +147,11 @@
 
 
 
-  ;; eval elisp expressions
-  "ei" 'eval-expression
-
-
-
-  ;; help functions
+  ;; SPC h: help functions
   "hw" 'hello
   "hk" 'describe-key
   "hf" 'describe-function
+  "hF" 'describe-face
   "hs" 'info-lookup-symbol
   "hv" 'describe-variable
 
@@ -160,15 +159,6 @@
 
   ;; dired operations
   "dd" 'dired
-
-
-
-  ;; find things
-  "C-f s" 'swiper-isearch
-  "C-f f" 'swiper
-  "C-f p" 'swiper-thing-at-point
-  "C-f d" 'xref-find-definitions
-  "C-f i" 'imenu
 
 
 
@@ -181,26 +171,19 @@
   ;; project operations
   "p SPC" 'project-execute-extended-command
   "p'" 'projectile-run-vterm
-  "p!" 'project-shell-command
-  "p&" 'project-async-shell-command
-  "pp" 'project-switch-project
-  "pf" 'project-find-file
-  "pg" 'project-find-regexp
+  "p!" 'projectile-run-shell-command-in-root
+  "p&" 'projectile-run-async-shell-command-in-root
+  "pp" 'projectile-switch-project
+  "pf" 'projectile-find-file
+  "pa" 'projectile-add-known-project
 
 
 
-  ;; quit options
+  ;; SPC q: quit options
   "qq" 'kill-emacs
   "qr" 'restart-emacs
   "qQ" 'server-stop
   "qR" 'server-start
-  "qb" 'tab-bar-close-tab
-  "ql" 'tab-line-close-tab
-
-
-
-  ;; resume
-  "rr" 'ivy-resume
 
 
 
@@ -209,18 +192,31 @@
   "SS" 'eglot-reconnect
   "Sd" 'eglot-shutdown
   "SD" 'eglot-shutdown-all
+  "So" 'eglot-events-buffer
+  "Se" 'eglot-stderr-buffer
 
+
+
+  ;; SPC s: lsp-code
   "sN" 'flymake-goto-prev-error
   "sn" 'flymake-goto-next-error
-  "sf" 'format-all-buffer
+  "sF" 'format-all-buffer
   "sc" 'eglot-code-actions
-  "sr" 'eglot-rename
-  "sto" 'eglot-events-buffer
-  "ste" 'eglot-stderr-buffer
+  "se" 'eldoc-doc-buffer
+  "sR" 'eglot-rename
+  ;; find things
+  "si" 'imenu
+  ;; "ss" 'swiper-isearch
+  "sr" 'ivy-resume
+  "ss" 'swiper
+  "sx" 'swiper-thing-at-point
+  "sd" 'xref-find-definitions
+  "sD" 'xref-find-references
+  "sp" 'counsel-yank-pop
 
 
 
-  ;; toggles
+  ;; SPC t: toggles
   "tk" 'keycast-tab-bar-mode
   "tT" 'load-theme
   "tl" 'global-tab-line-mode
@@ -228,15 +224,16 @@
 
 
 
-  ;; window split
+  ;; SPC w: window split
   "w" 'ace-window
-  ;; "w|" 'split-window-horizontally
-  ;; "w-" 'split-window-vertically
-  ;; "wo" 'delete-other-windows
 
 
 
-  "ko" 'delete-other-windows)
+  ;; SPC k: kill
+  "ko" 'delete-other-windows
+  "kb" 'tab-bar-close-tab
+  "kl" 'kill-current-buffer)
+
 
 
 
@@ -250,24 +247,16 @@
   "<left>" 'evil-window-left
   "<right>" 'evil-window-right
 
-  ;; "1" '(winum-select-window-1 :wk "winum 1")
-  ;; "2" '(winum-select-window-2 :wk "winum 2")
-  ;; "3" '(winum-select-window-3 :wk "winum 3")
-  ;; "4" '(winum-select-window-4 :wk "winum 4")
-  ;; "5" '(winum-select-window-5 :wk "winum 5")
-  ;; "6" '(winum-select-window-6 :wk "winum 6")
-  ;; "7" '(winum-select-window-7 :wk "winum 7")
-  ;; "8" '(winum-select-window-8 :wk "winum 8")
-  ;; "9" '(winum-select-window-9 :wk "winum 9")
-
   )
 
 
+
+;;; general ace-window
 (general-define-key
  :status '(motion insert emacs)
  :keymaps 'override
 
- "C-w" 'ace-window)
+ "<f3>" 'ace-window)
 
 
 
@@ -327,13 +316,6 @@
 
 
 
-;;; for evil normal state
-(general-define-key
- :states 'normal
- "C-p" 'counsel-yank-pop)
-
-
-
 ;;; for lispy mode and other auto parens
 ;;; for direct insert mode
 (general-define-key
@@ -389,7 +371,6 @@
  [remap evil-open-below] 'haskell-evil-open-below
  [remap evil-open-above] 'haskell-evil-open-above
  )
-
 
 
 

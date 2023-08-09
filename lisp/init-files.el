@@ -24,6 +24,9 @@
   :config
   (projectile-mode 1))
 
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
 
 
 ;;; recent files

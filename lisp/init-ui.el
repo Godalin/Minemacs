@@ -3,9 +3,12 @@
 
 
 ;;; welcome message
-;; (defun display-startup-echo-area-message ()
-;;   (message "Hello you to Minemacs by Godalin"))
+(defun display-startup-echo-area-message ()
+  (message "Hello you to Minemacs by Godalin"))
 
+
+(add-to-list 'default-frame-alist
+	     '(alpha-background . 90))
 
 
 ;;; theme
@@ -45,26 +48,43 @@
 (tab-bar-mode)
 (setq tab-bar-new-button nil
       tab-bar-close-button nil)
-(set-face-attribute 'tab-bar-tab nil)
+
+(set-face-attribute 'tab-bar-tab nil
+		    :background "gray25"
+		    :box nil
+		    ;; :box '(:line-width 1 :style pressed-button)
+		    )
+(set-face-attribute 'tab-bar nil
+		    :box nil
+		    ;; :box '(:line-width 1 :style released-button)
+		    )
 
 
 
 ;;; tab line mode
 ;;; tabline for each window
 (global-tab-line-mode)
+
 (setq tab-line-new-button nil
       tab-line-close-button nil
-      tab-line-separator "  ")
+      tab-line-separator " ")
+
 (set-face-attribute 'tab-line nil
-		    :inherit 'tab-bar
+		    :family "Maple Mono"
+		    :height 120
 		    :background "#2c323C")
+
 (set-face-attribute 'tab-line-tab nil
-		    :inherit 'tab-bar-tab
 		    :box nil
-		    :height 120)
+		    :inherit 'tab-bar-tab)
+
 (set-face-attribute 'tab-line-tab-current nil
-		    :background "#282C34")
+		    :box 2
+		    :foreground "SkyBlue1"
+		    :background "gray25")
+
 (set-face-attribute 'tab-line-tab-inactive nil
+		    :box 2
 		    :background "#2c323C")
 
 
@@ -80,8 +100,6 @@
     (lambda ()
       (setq display-line-numbers-type 'relative)
       (display-line-numbers-mode t)))))
-
-
 
 
 
@@ -111,12 +129,12 @@
 	doom-modeline-checker-simple-format nil
 	)
 
-  (doom-modeline-mode 1)
-  (set-face-attribute 'mode-line nil
-		      :height 120))
+  (doom-modeline-mode 1))
 
-
-
+(set-face-attribute 'mode-line nil
+		    :height 120)
+(set-face-attribute 'mode-line-inactive nil
+		    :height 120)
 
 
 
